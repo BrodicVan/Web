@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Mapper.MessageMapper">
+    <insert id="insertMessage">
+        insert into Message VALUES(
+            #{userID},
+            #{postID},
+            #{status}
+        )
+
+    </insert>
+
+    <delete id="deleteMessage">
+        delete from Message
+        <where>
+            <if test="userID != -1">and userID = #{userID}</if>
+            <if test="postID != -1">
+                and postID = #{postID}
+            </if>
+            <if test="status != -1">
+                and status = #{status}
+            </if>
+        </where>
+    </delete>
+
+    <update id="updateMessage">
+        update Message
+        <set>
+            <if test="newMessage.userID!=-1">
+                userID=#{newMessage.userID},
+            </if>
+            <if test="newMessage.postID!=-1">
+                postID=#{newMessage.postID},
+            </if>
+            <if test="newMessage.status!=-1">
+                status=#{newMessage.status},
+            </if>
+
+        </set>
+        <where>
+            <if test="oldMessage.userID!=-1">and userId=#{oldMessage.userID}</if>
+            <if test="oldMessage.postID!=-1">and postId=#{oldMessage.postID}</if>
+            <if test="oldMessage.status!=-1">and status=#{oldMessage‘.status}</if>
+        </where>
+    </update>
+
+    <select id="selectByCondition" resultType="Message">
+        select * from Message
+        <where>
+            <if test="userID != -1">and userID = #{userID}</if>
+            <if test="postID != -1">
+                and postID = #{postID}
+            </if>
+            <if test="status != -1">
+                and status = #{status}
+            </if>
+        </where>
+    </select>
+</mapper>

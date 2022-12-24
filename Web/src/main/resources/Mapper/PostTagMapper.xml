@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Mapper.PostTagMapper">
+    <insert id="insertPostTag">
+        insert into PostTag VALUES(
+            #{postID},
+            #{tagID}
+        )
+
+    </insert>
+
+    <delete id="deletePostTag">
+        delete from PostTag
+        <where>
+            <if test="postID != -1">and postID = #{postID}</if>
+            <if test="tagID != -1">
+                and tagID = #{tagID}
+            </if>
+
+        </where>
+    </delete>
+
+    <update id="updatePostTag">
+        update PostTag
+        <set>
+            <if test="newPostTag.postID!=-1">
+                postID=#{newPostTag.postID},
+            </if>
+            <if test="newPostTag.tagID!=-1">
+                tagID=#{newPostTag.tagID},
+            </if>
+
+        </set>
+        <where>
+            <if test="oldPostTag.postID!=-1">and postId=#{oldPostTag.postID}</if>
+            <if test="oldPostTag.tagID!=-1">and tagId=#{oldPostTag.tagID}</if>
+        </where>
+    </update>
+
+    <select id="selectByCondition" resultType="PostTag">
+        select * from PostTag
+        <where>
+            <if test="postID != -1">and postID = #{postID}</if>
+            <if test="tagID != -1">
+                and tagID = #{tagID}
+            </if>
+        </where>
+    </select>
+</mapper>

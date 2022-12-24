@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Mapper.UserMapper">
+    <insert id="insertUser">
+        insert into User VALUES(
+            NULL,
+            #{userName},
+            #{password},
+            #{userType},
+            <choose>
+                <when test="email==null">''</when>
+                <otherwise>#{email}</otherwise>
+            </choose>,
+
+            #{status},
+            <choose>
+                <when test="head==null">''</when>
+                <otherwise>#{head}</otherwise>
+            </choose>
+        )
+
+    </insert>
+
+    <delete id="deleteUser">
+        delete from User
+        <where>
+            <if test="userID != -1">and userID = #{userID}</if>
+            <if test="userName != null">
+                and userName = #{userName}
+            </if>
+            <if test="password != null">
+                and password = #{password}
+            </if>
+            <if test="userType != -1">
+                and usrType = #{userType}
+            </if>
+            <if test="email != null">
+                and email = #{email}
+            </if>
+            <if test="status != -1">
+                and status = #{status}
+            </if>
+            <if test="head != null">
+                and head = #{head}
+            </if>
+        </where>
+    </delete>
+
+    <update id="updateUser">
+        update User
+        <set>
+            <if test="userName!=null">
+                userName=#{userName},
+            </if>
+            <if test="password!=null">
+                password=#{password},
+            </if>
+            <if test="userType!=-1">
+                userType=#{userType},
+            </if>
+            <if test="email!=null">
+                email=#{email},
+            </if>
+            <if test="status!=-1">
+                status=#{status},
+            </if>
+            <if test="head!=null">
+                head=#{head},
+            </if>
+
+
+        </set>
+        where userID=#{userID};
+    </update>
+
+    <select id="selectByCondition" resultType="User">
+        select * from User
+        <where>
+            <if test="userID != -1">and userID = #{userID}</if>
+            <if test="userName != null">
+                and userName = #{userName}
+            </if>
+            <if test="password != null">
+                and password = #{password}
+            </if>
+            <if test="userType != -1">
+                and usrType = #{userType}
+            </if>
+            <if test="email != null">
+                and email = #{email}
+            </if>
+            <if test="status != -1">
+                and status = #{status}
+            </if>
+            <if test="head != null">
+                and head = #{head}
+            </if>
+        </where>
+    </select>
+</mapper>

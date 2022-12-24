@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Mapper.UserDetailMapper">
+    <insert id="insertUserDetail">
+        insert into UserDetail VALUES(
+            #{userID},
+            <choose>
+                <when test="birthday==null">CURRENT_DATE()</when>
+                <otherwise>#{birthday}</otherwise>
+            </choose>,
+            <choose>
+                <when test="phone==null">''</when>
+                <otherwise>#{phone}</otherwise>
+            </choose>,
+            <choose>
+                <when test="QQ==null">''</when>
+                <otherwise>#{QQ}</otherwise>
+            </choose>,
+            <choose>
+                <when test="WeChat==null">''</when>
+                <otherwise>#{WeChat}</otherwise>
+            </choose>,
+
+            <choose>
+                <when test="selfIntro==null">''</when>
+                <otherwise>#{selfIntro}</otherwise>
+            </choose>
+        )
+
+    </insert>
+
+    <delete id="deleteUserDetail">
+        delete from UserDetail
+        <where>
+            <choose>
+                <when test="userID != -1">and userID = #{userID}</when>
+                <otherwise>0</otherwise>
+            </choose>
+        </where>
+    </delete>
+
+    <update id="updateUserDetail">
+        update UserDetail
+        <set>
+            <if test="userDetail.birthday!=null">
+                birthday=#{userDetail.birthday},
+            </if>
+            <if test="userDetail.phone!=null">
+                phone=#{userDetail.phone},
+            </if>
+            <if test="userDetail.QQ!=-1">
+                QQ=#{userDetail.QQ},
+            </if>
+            <if test="userDetail.WeChat!=null">
+                WeChat=#{userDetail.WeChat},
+            </if>
+
+            <if test="userDetail.selfIntro!=null">
+                selfIntro=#{userDetail.selfIntro},
+            </if>
+
+        </set>
+        where userID=#{userID};
+    </update>
+
+    <select id="selectByCondition" resultType="UserDetail">
+        select * from UserDetail
+        <where>
+            <if test="userID != -1">and userID = #{userID}</if>
+            <if test="birthday != null">and birthday = #{birthday}</if>
+            <if test="phone != null">and phone = #{phone}</if>
+            <if test="WeChat != null">and WeChat = #{WeChat}</if>
+            <if test="QQ != null">and QQ = #{QQ}</if>
+            <if test="selfIntro != null">and selfIntro = #{selfIntro}</if>
+        </where>
+    </select>
+</mapper>

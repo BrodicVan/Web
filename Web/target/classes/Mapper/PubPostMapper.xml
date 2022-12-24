@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Mapper.PubPostMapper">
+    <insert id="insertPubPost">
+        insert into PubPost VALUES(
+            #{pubPostID}
+        )
+
+    </insert>
+
+    <delete id="deletePubPost">
+        delete from PubPost where pubPostID = #{pubPostID};
+    </delete>
+
+    <update id="updatePubPost">
+        update PubPost set pubPostID=#{newPubPostID} where pubPostID=#{oldPubPostID};
+    </update>
+</mapper>

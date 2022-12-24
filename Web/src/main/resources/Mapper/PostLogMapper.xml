@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Mapper.PostLogMapper">
+    <insert id="insertPostLog">
+        insert into PostLog VALUES(
+            NULL,
+            #{userID},
+            #{postID},
+            #{time},
+            #{type},
+            <choose>
+                <when test="message==null">''</when>
+                <otherwise>#{message}</otherwise>
+            </choose>
+        )
+
+    </insert>
+
+    <delete id="deletePostLog">
+        delete from PostLog
+        <where>
+            <if test="postLogID != -1">and postLogID = #{postLogID}</if>
+            <if test="userID != -1">and userID = #{userID}</if>
+            <if test="postID != -1">
+                and postID = #{postID}
+            </if>
+            <if test="time != null">
+                and time = #{time}
+            </if>
+            <if test="type != -1">
+                and usrType = #{type}
+            </if>
+            <if test="message != null">
+                and message = #{message}
+            </if>
+        </where>
+    </delete>
+
+    <update id="updatePostLog">
+        update PostLog
+        <set>
+            <if test="userID!=-1">
+                userID=#{userID},
+            </if>
+            <if test="postID!=-1">
+                postID=#{postID},
+            </if>
+            <if test="time!=null">
+                time=#{time},
+            </if>
+            <if test="type!=-1">
+                type=#{type},
+            </if>
+            <if test="message!=null">
+                message=#{message},
+            </if>
+        </set>
+        where postLogID=#{postLogID};
+    </update>
+
+    <select id="selectByCondition" resultType="PostLog">
+        select * from PostLog
+        <where>
+            <if test="postLogID != -1">and postLogID = #{postLogID}</if>
+            <if test="userID != -1">and userID = #{userID}</if>
+            <if test="postID != -1">
+                and postID = #{postID}
+            </if>
+            <if test="time != null">
+                and time = #{time}
+            </if>
+            <if test="type != -1">
+                and usrType = #{type}
+            </if>
+            <if test="message != null">
+                and message = #{message}
+            </if>
+        </where>
+    </select>
+</mapper>

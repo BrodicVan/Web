@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Mapper.BoxMapper">
+    <insert id="insertBox">
+        insert into Box VALUES(
+            #{userID},
+            #{postID}
+        )
+
+    </insert>
+
+    <delete id="deleteBox">
+        delete from Box
+        <where>
+            <if test="userID != -1">and userID = #{userID}</if>
+            <if test="postID != -1">
+                and postID = #{postID}
+            </if>
+
+        </where>
+    </delete>
+
+    <update id="updateBox">
+        update Box
+        <set>
+            <if test="newBox.userID!=-1">
+                userID=#{newBox.userID},
+            </if>
+            <if test="newBox.postID!=-1">
+                postID=#{newBox.postID},
+            </if>
+
+        </set>
+        <where>
+            <if test="oldBox.userID!=-1">and userId=#{oldBox.userID}</if>
+            <if test="oldBox.postID!=-1">and postId=#{oldBox.postID}</if>
+        </where>
+    </update>
+
+    <select id="selectByCondition" resultType="Box">
+        select * from Box
+        <where>
+            <if test="userID != -1">and userID = #{userID}</if>
+            <if test="postID != -1">
+                and postID = #{postID}
+            </if>
+        </where>
+    </select>
+</mapper>

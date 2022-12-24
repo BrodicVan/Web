@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Mapper.LikeOperationMapper">
+    <insert id="insertLikeOperation">
+        insert into LikeOperation VALUES(
+            #{userID},
+            #{postID},
+            #{operation}
+        )
+
+    </insert>
+
+    <delete id="deleteLikeOperation">
+        delete from LikeOperation
+        <where>
+            <if test="userID != -1">and userID = #{userID}</if>
+            <if test="postID != -1">
+                and postID = #{postID}
+            </if>
+            <if test="operation != -1">
+                and operation = #{operation}
+            </if>
+        </where>
+    </delete>
+
+    <update id="updateLikeOperation">
+        update LikeOperation
+        <set>
+            <if test="newLikeOperation.userID!=-1">
+                userID=#{newLikeOperation.userID},
+            </if>
+            <if test="newLikeOperation.postID!=-1">
+                postID=#{newLikeOperation.postID},
+            </if>
+            <if test="newLikeOperation.operation!=-1">
+                operation=#{newLikeOperation.operation},
+            </if>
+
+        </set>
+        <where>
+            <if test="oldLikeOperation.userID!=-1">and userId=#{oldLikeOperation.userID}</if>
+            <if test="oldLikeOperation.postID!=-1">and postId=#{oldLikeOperation.postID}</if>
+            <if test="oldLikeOperation.operation!=-1">and operation=#{oldLikeOperation‘.operation}</if>
+        </where>
+    </update>
+
+    <select id="selectByCondition" resultType="LikeOperation">
+        select * from LikeOperation
+        <where>
+            <if test="userID != -1">and userID = #{userID}</if>
+            <if test="postID != -1">
+                and postID = #{postID}
+            </if>
+            <if test="operation != -1">
+                and operation = #{operation}
+            </if>
+        </where>
+    </select>
+</mapper>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Mapper.CommentMapper">
+    <insert id="insertComment">
+        insert into Comment VALUES(
+            #{fatherID},
+            #{childID}
+        )
+
+    </insert>
+
+    <delete id="deleteComment">
+        delete from Comment
+        <where>
+            <if test="fatherID != -1">and fatherID = #{fatherID}</if>
+            <if test="childID != -1">
+                and childID = #{childID}
+            </if>
+
+        </where>
+    </delete>
+
+    <update id="updateComment">
+        update Comment
+        <set>
+            <if test="newComment.fatherID!=-1">
+                fatherID=#{newComment.fatherID},
+            </if>
+            <if test="newComment.childID!=-1">
+                childID=#{newComment.childID},
+            </if>
+
+        </set>
+        <where>
+            <if test="oldComment.fatherID!=-1">and fatherId=#{oldComment.fatherID}</if>
+            <if test="oldComment.childID!=-1">and childId=#{oldComment.childID}</if>
+        </where>
+    </update>
+
+    <select id="selectByCondition" resultType="Comment">
+        select * from Comment
+        <where>
+            <if test="fatherID != -1">and fatherID = #{fatherID}</if>
+            <if test="childID != -1">
+                and childID = #{childID}
+            </if>
+        </where>
+    </select>
+</mapper>

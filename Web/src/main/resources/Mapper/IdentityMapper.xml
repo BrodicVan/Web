@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Mapper.IdentityMapper">
+    <insert id="insertIdentity">
+        insert into Identity VALUES(
+            #{userID},
+            #{studentID},
+            #{name}
+        )
+
+    </insert>
+
+    <delete id="deleteIdentity">
+        delete from Identity
+        <where>
+            <if test="userID != -1">and userID = #{userID}</if>
+            <if test="name != null">
+                and name = #{name}
+            </if>
+            <if test="studentID != null">
+                and studentID = #{studentID}
+            </if>
+        </where>
+    </delete>
+
+    <update id="updateIdentity">
+        update Identity
+        <set>
+            <if test="identity.userID!=-1">
+                userID=#{identity.userID},
+            </if>
+            <if test="identity.name!=null">
+                name=#{identity.name},
+            </if>
+            <if test="identity.studentID!=null">
+                studentID=#{identity.studentID},
+            </if>
+
+        </set>
+        where userID=#{userID};
+    </update>
+
+    <select id="selectByCondition" resultType="Identity">
+        select * from Identity
+        <where>
+            <if test="userID != -1">and userID = #{userID}</if>
+            <if test="name != null">
+                and name = #{name}
+            </if>
+            <if test="studentID != null">
+                and studentID = #{studentID}
+            </if>
+        </where>
+    </select>
+</mapper>
